@@ -15,7 +15,7 @@
 //     c15 = false,
 //     c16 = false;
 let board = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10', 'c11', 'c12', 'c13', 'c14', 'c15', 'c16'];
-let shuffleObjects = [];
+let allArrays = [];
 
 let jObject = [
     ['c4', 'c8', 'c12', 'c16', 'c15'],
@@ -23,7 +23,7 @@ let jObject = [
     ['c9', 'c10', 'c11', 'c12', 'c16'],
     ['c5', 'c6', 'c7', 'c8', 'c12'],
     ['c1', 'c2', 'c3', 'c4', 'c8]'],
-    ['c1', 'c5', 'c6', 'c7', 'c8]', ]
+    ['c1', 'c5', 'c6', 'c7', 'c8]'],
     ['c5', 'c9', 'c10', 'c11', 'c12'],
     ['c1', 'c2', 'c6', 'c10', 'c14'],
     ['c2', 'c3', 'c7', 'c11', 'c15'],
@@ -46,7 +46,7 @@ let rectangleObject = [
     ['c11', 'c12', 'c15', 'c16']
 ];
 
-let verticalObject = [
+let verticalObjects = [
     ['c1', 'c5', 'c9'],
     ['c2', 'c6', 'c10'],
     ['c3', 'c7', 'c11'],
@@ -63,7 +63,7 @@ let verticalObject = [
     ['c9', 'c10', 'c11']
 ];
 
-let otherObject = [
+let otherObjects = [
     ['c12', 'c16', 'c15'],
     ['c11', 'c15', 'c14'],
     ['c9', 'c10', 'c14'],
@@ -93,24 +93,25 @@ let otherObject = [
 
 function init() {
     console.log('Test');
-    main(board, jObject, rectangleObject, verticalObject, otherObject);
+    main(board);
 }
 
-function main(board, jObject, rectangleObject, verticalObject, otherObject) {
+function main(board) {
     for (let i = 0; i < board.length; i++) {
         board[i] = false;
     }
     shuffleAllArrays();
-    shuffle(shuffleObjects);
+    //shuffle(allArrays);
     checkGame();
 
 }
 
 function checkGame() {
-    while (shuffleObjects.length > 0) {
-        let firstObject = shuffleObjects.pop();
-        shuffleObjects = shuffleObjects.splice(shuffleObjects.length - 1, 1);
-        console.log(firstObject[0]);
+    //console.log(shuffleObjects);
+    while (allArrays.length > 0) {
+        let firstObject = allArrays.pop();
+        allArrays = allArrays.splice(allArrays.length - 1, 1);
+        //console.log(firstObject[0]);
         for (let x = 0; x < firstObject.length; x++) {
             let cell = document.getElementById(firstObject[x]);
             if (cell.innerHTML == true) {
@@ -120,47 +121,66 @@ function checkGame() {
                 document.getElementById(firstObject[x]).innerHTML = true;
             }
         }
-        shuffleObjects.length--;
+        // shuffleObjects.length--;
     }
     document.getElementById('result').innerHTML = "Game successfully";
     return;
 }
 
 function shuffleAllArrays() {
-    let jObjectRand = shuffle(jObject);
-    let jObjectRandLast = jObjectRand.pop();
-    shuffleObjects.push(jObjectRandLast);
 
-    let rectangleObjectRand = shuffle(rectangleObject);
+    //let jObjectRand = getRandom(jObject, jObject.length);
+    let jObjectRandLast = jObject.pop();
+    console.log('jObjectRandLast', jObjectRandLast);
+
+
+    let rectangleObjectRand = getRandom(rectangleObject, rectangleObject.length);
     let rectangleObjectRandLast = rectangleObjectRand.pop();
-    shuffleObjects.push(rectangleObjectRandLast);
 
-    let verticalObjectRand = shuffle(verticalObject);
+    let verticalObjectRand = getRandom(verticalObjects, verticalObjects.length);
     let verticalObjectRandLast = verticalObjectRand.pop();
-    shuffleObjects.push(verticalObjectRandLast);
 
-    let otherObjectRand = shuffle(otherObject);
+    let otherObjectRand = getRandom(otherObjects, otherObjects.length);
     let otherObjectRandLast = otherObjectRand.pop();
-    shuffleObjects.push(otherObjectRandLast);
+
+    // allArrays.push(verticalObjectRandLast);
+    // allArrays.push(rectangleObjectRandLast);
+    // allArrays.push(otherObjectRandLast);
+    allArrays.push(jObjectRandLast);
+    console.log('allArrays', allArrays);
+
 }
 
 
-function shuffle(array) {
-    let currentIndex = array.length,
-        randomIndex;
+// function shuffle(array) {
+//     let currentIndex = array.length,
+//         randomIndex;
 
-    // While there remain elements to shuffle...
-    while (currentIndex != 0) {
+//     // While there remain elements to shuffle...
+//     while (currentIndex != 0) {
 
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
+//         // Pick a remaining element...
+//         randomIndex = Math.floor(Math.random() * currentIndex);
+//         currentIndex--;
 
-        // And swap it with the current element.
-        [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]
-        ];
+//         // And swap it with the current element.
+//         [array[currentIndex], array[randomIndex]] = [
+//             array[randomIndex], array[currentIndex]
+//         ];
+//     }
+
+//     return array;
+// }
+function getRandom(arr, n) {
+    var result = new Array(n),
+        len = arr.length,
+        taken = new Array(len);
+    if (n > len)
+        throw new RangeError("getRandom: more elements taken than available");
+    while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = arr[x in taken ? taken[x] : x];
+        taken[x] = --len in taken ? taken[len] : len;
     }
-
-    return array;
+    return result;
 }
