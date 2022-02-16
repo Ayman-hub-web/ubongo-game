@@ -1,0 +1,13 @@
+- Ubongo Spiel
+- Das Spiel startet sobald die Seite geladen wird.
+- Bereit gestellt sind 4 arrays, die glaobal definiert sind (array von mehreren arrays).
+- Diese Arrays entahlten alle Möglichkeiten für die vorhandenen pieces.
+- Diese arrays werden durch eine Random-Funktion gemischt und dabei von jedem ein zufälliges array genommen.
+- Die genommenen bzw. ausgesuchten (durch die Random-Funktion) werden in ein weiteres array hinzugefügt (allArrays).
+- allArrays ist also ein array mit maximal 4 Elementen (arrays).
+- Durch eine While Schleife mit einer For-SChleife im Inneren werden die einzelenen arrays
+     in's board (die im index.html dargestellte Tabelle) hinzugefüt.
+- Das Hinzufügen von den Elementen dieser Arrays wird nach dem man gecheckt hat ob die Zelle kein true enthält. 
+- Wenn diese Zelle kein true enthält, dann wird ein true hinzugefügt und die Schleife läuft weiter.
+- Ansonstens gibt es eine Überlappung und das Spiel wird erfolglos beendet.
+- Wenn alle arrays durchlaufen sind, dann ist das Spiel erfolgreich beendet und die pieces setzen richtig an ihren Plätzen.

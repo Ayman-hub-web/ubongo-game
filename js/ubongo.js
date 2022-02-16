@@ -1,20 +1,3 @@
-// let c1 = false,
-//     c2 = false,
-//     c3 = false,
-//     c4 = false,
-//     c5 = false,
-//     c6 = false,
-//     c7 = false,
-//     c8 = false,
-//     c9 = false,
-//     c10 = false,
-//     c11 = false,
-//     c12 = false,
-//     c13 = false,
-//     c14 = false,
-//     c15 = false,
-//     c16 = false;
-let board = ['c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'c9', 'c10', 'c11', 'c12', 'c13', 'c14', 'c15', 'c16'];
 let allArrays = [];
 
 let jObject = [
@@ -22,15 +5,15 @@ let jObject = [
     ['c3', 'c7', 'c11', 'c15', 'c14'],
     ['c9', 'c10', 'c11', 'c12', 'c16'],
     ['c5', 'c6', 'c7', 'c8', 'c12'],
-    ['c1', 'c2', 'c3', 'c4', 'c8]'],
-    ['c1', 'c5', 'c6', 'c7', 'c8]'],
+    ['c1', 'c2', 'c3', 'c4', 'c8'],
+    ['c1', 'c5', 'c6', 'c7', 'c8'],
     ['c5', 'c9', 'c10', 'c11', 'c12'],
     ['c1', 'c2', 'c6', 'c10', 'c14'],
     ['c2', 'c3', 'c7', 'c11', 'c15'],
     ['c3', 'c4', 'c8', 'c12', 'c16'],
-    ['c4', 'c8', 'c7', 'c6,', 'c5'],
+    ['c4', 'c8', 'c7', 'c6', 'c5'],
     ['c8', 'c12', 'c11', 'c10', 'c9'],
-    ['c16', 'c15', 'c11', 'c7,', 'c3'],
+    ['c16', 'c15', 'c11', 'c7', 'c3'],
     ['c15', 'c14', 'c10', 'c6', 'c2'],
 
 ];
@@ -91,48 +74,47 @@ let otherObjects = [
     ['c4', 'c3', 'c7']
 ];
 
+/**
+ * 
+ * function to load all data on index page
+ */
 function init() {
-    console.log('Test');
-    main(board);
-}
-
-function main(board) {
-    for (let i = 0; i < board.length; i++) {
-        board[i] = false;
-    }
     shuffleAllArrays();
-    //shuffle(allArrays);
     checkGame();
-
 }
 
+/**
+ * this function check if game fail or not and write on index page a message
+ * @returns 
+ * 
+ */
 function checkGame() {
-    //console.log(shuffleObjects);
+
     while (allArrays.length > 0) {
         let firstObject = allArrays.pop();
-        allArrays = allArrays.splice(allArrays.length - 1, 1);
-        //console.log(firstObject[0]);
         for (let x = 0; x < firstObject.length; x++) {
             let cell = document.getElementById(firstObject[x]);
-            if (cell.innerHTML == true) {
-                document.getElementById('result').innerHTML = "Game fail";
+            if (cell.innerHTML == 'true') {
+                document.getElementById('result-fail').innerHTML = "Game fail";
                 return;
             } else {
-                document.getElementById(firstObject[x]).innerHTML = true;
+                document.getElementById(firstObject[x]).innerHTML = 'true';
             }
         }
-        // shuffleObjects.length--;
     }
     document.getElementById('result').innerHTML = "Game successfully";
     return;
 }
 
+
+/**
+ * this function build a new array from all global arrays. It take randomly a item (array)
+ * from each global arrays and push them in a new array (allArrays)
+ */
 function shuffleAllArrays() {
 
-    //let jObjectRand = getRandom(jObject, jObject.length);
-    let jObjectRandLast = jObject.pop();
-    console.log('jObjectRandLast', jObjectRandLast);
-
+    let jObjectRand = getRandom(jObject, jObject.length);
+    let jObjectRandLast = jObjectRand.pop();
 
     let rectangleObjectRand = getRandom(rectangleObject, rectangleObject.length);
     let rectangleObjectRandLast = rectangleObjectRand.pop();
@@ -143,34 +125,19 @@ function shuffleAllArrays() {
     let otherObjectRand = getRandom(otherObjects, otherObjects.length);
     let otherObjectRandLast = otherObjectRand.pop();
 
-    // allArrays.push(verticalObjectRandLast);
-    // allArrays.push(rectangleObjectRandLast);
-    // allArrays.push(otherObjectRandLast);
+    allArrays.push(rectangleObjectRandLast);
+    allArrays.push(verticalObjectRandLast);
+    allArrays.push(otherObjectRandLast);
     allArrays.push(jObjectRandLast);
-    console.log('allArrays', allArrays);
-
 }
 
 
-// function shuffle(array) {
-//     let currentIndex = array.length,
-//         randomIndex;
-
-//     // While there remain elements to shuffle...
-//     while (currentIndex != 0) {
-
-//         // Pick a remaining element...
-//         randomIndex = Math.floor(Math.random() * currentIndex);
-//         currentIndex--;
-
-//         // And swap it with the current element.
-//         [array[currentIndex], array[randomIndex]] = [
-//             array[randomIndex], array[currentIndex]
-//         ];
-//     }
-
-//     return array;
-// }
+/**
+ * random function to shuffle randomly all arrays (jObject,rectangleObject,verticalObjectRand and otherObjectRand ) in a array
+ * @param {array} arr 
+ * @param {number} n 
+ * @returns 
+ */
 function getRandom(arr, n) {
     var result = new Array(n),
         len = arr.length,
@@ -183,4 +150,12 @@ function getRandom(arr, n) {
         taken[x] = --len in taken ? taken[len] : len;
     }
     return result;
+}
+
+
+/**
+ * fuction to play again 
+ */
+function play() {
+    window.location.reload();
 }
